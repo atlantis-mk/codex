@@ -991,6 +991,7 @@ pub enum ResponseItem {
         #[ts(optional)]
         id: Option<ResponseItemId>,
         role: String,
+        #[serde(default)]
         content: Vec<ContentItem>,
         // Optional output-message phase (for example: "commentary", "final_answer").
         // Availability varies by provider/model, so downstream consumers must
@@ -1017,6 +1018,7 @@ pub enum ResponseItem {
         #[serde(default, skip_serializing_if = "Option::is_none")]
         #[ts(optional)]
         id: Option<ResponseItemId>,
+        #[serde(default)]
         summary: Vec<ReasoningItemReasoningSummary>,
         #[serde(default, skip_serializing_if = "should_serialize_reasoning_content")]
         #[ts(optional)]
