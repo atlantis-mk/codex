@@ -4,6 +4,9 @@ use super::*;
 
 impl ChatWidget {
     pub(crate) fn pause_for_disconnect(&mut self) {
+        // The app-server transport can fail while the separate WebRTC helper
+        // still sends microphone audio. Retire local media before showing offline UI.
+        let _ = self.reset_realtime_conversation();
         if let Some(questions) = &mut self.bottom_pane.questions {
             questions.delivery_enabled = false;
         }
@@ -67,6 +70,9 @@ impl ChatWidget {
     }
 
     pub(crate) fn handle_disconnected_key(&mut self, key: KeyEvent) {
+        if self.external_writer_view {
+            return;
+        }
         if self.handle_question_key(key) {
             return;
         }
