@@ -4,6 +4,7 @@
 // For both modes, any other output must be written to stderr.
 #![recursion_limit = "256"]
 #![deny(clippy::print_stdout)]
+#![recursion_limit = "512"]
 
 mod cli;
 mod event_processor;
